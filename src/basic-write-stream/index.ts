@@ -203,7 +203,7 @@ export abstract class BasicWriteStream implements NodeJS.WriteStream {
     unref(): void {}
 
     columns: number;
-    isTTY: boolean;
+    isTTY: true;
     rows: number;
     // tslint:enable
 }
