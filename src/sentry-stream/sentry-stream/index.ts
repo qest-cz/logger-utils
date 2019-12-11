@@ -45,8 +45,8 @@ export abstract class SentryStream extends BasicWriteStream implements NodeJS.Wr
                     }
                     scope.addEventProcessor((event) => Sentry.Handlers.parseRequest(event, record.req) as Promise<Sentry.Event>);
                 }
+                this.setExtrasFromRecord(record, scope);
                 if (record.payload) {
-                    scope.setExtra('payload', record.payload);
                     delete err.payload;
                 }
 
@@ -136,5 +136,14 @@ export abstract class SentryStream extends BasicWriteStream implements NodeJS.Wr
             default:
                 return Sentry.Severity.Error;
         }
+    }
+
+    private setExtrasFromRecord(record: IFlatLogObject, scope: Sentry.Scope) {
+        const skip = ['hostname', 'level', 'msg', 'message', 'code', 'name', 'pid', 'stack', 'time', 'type', 'v', 'req', 'user', 'node'];
+        Object.keys(record).forEach((k) => {
+            if (skip.indexOf(k) === -1) {
+                scope.setExtra(k, record[k]);
+            }
+        });
     }
 }
