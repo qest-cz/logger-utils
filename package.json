@@ -7,7 +7,12 @@
     "prettier:check": "prettier -l \"src/**/*.ts\"",
     "tslint:run": "tslint --fix -c tslint.json -p .",
     "tslint": "tslint -c tslint.json -p .",
-    "build": "rimraf dist && tsc"
+    "tsc:check": "tsc --noEmit",
+    "code:fix": "yarn prettier:run && yarn tslint:run",
+    "code:check": "yarn prettier:check && yarn tslint && yarn tsc:check",
+    "build": "rimraf dist && tsc",
+    "build:watch": "rimraf dist && tsc -w",
+    "build:docs": "rm -rf ./docs && yarn typedoc"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,9 +25,6 @@
   "license": "MIT",
   "dependencies": {
     "@sentry/node": "^5.3.0",
-    "@types/bunyan": "^1.8.5",
-    "@types/pino-http": "^4.0.1",
-    "@types/pino-multi-stream": "^3.1.1",
     "bunyan": "^1.8.12",
     "dotenv": "^6.2.0",
     "pino": "^5.12.5",
@@ -30,6 +32,9 @@
     "raven": "^2.6.4"
   },
   "devDependencies": {
+    "@types/bunyan": "^1.8.5",
+    "@types/pino-http": "^4.0.1",
+    "@types/pino-multi-stream": "^3.1.1",
     "cross-env": "^5.2.0",
     "prettier": "^1.13.5",
     "rimraf": "^2.6.3",
@@ -37,6 +42,8 @@
     "tslint": "^5.9.1",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.4.5"
+    "typedoc": "^0.19.2",
+    "typedoc-plugin-markdown": "^3.0.11",
+    "typescript": "^4.0.0"
   }
 }

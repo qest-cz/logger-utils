@@ -37,7 +37,8 @@
           "functions": "ignore",
           "typeLiterals": "ignore"
         },
-        "singleline": "ignore"
+        "singleline": "ignore",
+        "esSpecCompliant": true
       }
     ],
     "no-duplicate-variable": true,
@@ -70,10 +71,6 @@
       "check-operator",
       "check-module",
       "check-type"
-    ],
-    "interface-name": [
-      true,
-      "always-prefix"
     ],
     "member-ordering": [
       true,
