@@ -2,6 +2,11 @@
 import { AddressInfo, IpcSocketConnectOpts, SocketConnectOpts, TcpSocketConnectOpts } from 'net';
 
 export abstract class BasicWriteStream implements NodeJS.WriteStream {
+    writableEnded: boolean;
+    writableCorked: number;
+    readableEncoding: BufferEncoding;
+    readableEnded: boolean;
+    readableFlowing: boolean;
     writableHighWaterMark: number;
     writableLength: number;
     readable: boolean;
@@ -186,7 +191,9 @@ export abstract class BasicWriteStream implements NodeJS.WriteStream {
         return false;
     }
 
-    ref(): void {}
+    ref(): this {
+        return undefined;
+    }
 
     setKeepAlive(enable?: boolean, initialDelay?: number): this {
         return undefined;
@@ -200,7 +207,9 @@ export abstract class BasicWriteStream implements NodeJS.WriteStream {
         return undefined;
     }
 
-    unref(): void {}
+    unref(): this {
+        return undefined;
+    }
 
     columns: number;
     isTTY: true;
