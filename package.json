@@ -1,6 +1,6 @@
 {
   "name": "@qest/logger-utils",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "",
   "scripts": {
     "prettier:run": "prettier --write \"src/**/*.ts\"",
