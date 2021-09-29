@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/node';
-import { NodeOptions } from '@sentry/node/dist/backend';
 import { BasicWriteStream } from '../../basic-write-stream';
 import { IErrorObject, IFlatLogObject, ISentryBreadcrumb, ISentryStreamOptions } from '../../interfaces';
 
@@ -10,11 +9,12 @@ export abstract class SentryStream extends BasicWriteStream implements NodeJS.Wr
 
     constructor({ enableDedupe, ...sentryInit }: ISentryStreamOptions) {
         super();
-        const config: NodeOptions = sentryInit;
+
         if (!enableDedupe) {
-            config.integrations = (integrations) => integrations.filter((integration) => integration.name !== 'Dedupe');
+            sentryInit.integrations = (integrations) => integrations.filter((integration) => integration.name !== 'Dedupe');
         }
-        Sentry.init({ ...config });
+
+        Sentry.init({ ...sentryInit });
     }
 
     public write(recordString: string | Buffer) {

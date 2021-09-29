@@ -1,3 +1,4 @@
+import { NodeOptions } from '@sentry/node';
 import * as Bunyan from 'bunyan';
 import { WriteStream } from 'fs';
 import * as Pino from 'pino';
@@ -37,9 +38,7 @@ export type IBunyanLoggerOption = {
     outputStreams: ICustomLoggerStream[];
 } & Bunyan.LoggerOptions;
 
-export interface ISentryStreamOptions {
-    environment?: string;
-    release?: string;
+export interface ISentryStreamOptions extends NodeOptions {
     dsn: string;
     enableDedupe?: boolean;
 }
