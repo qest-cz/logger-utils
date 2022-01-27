@@ -1,15 +1,18 @@
 import * as pino from 'pino';
 import { multistream } from 'pino-multi-stream';
-import { ILogger, IPinoLoggerOptions } from '../interfaces';
+import { Formatter, ILogger, IPinoLoggerOptions } from '../interfaces';
 
 export class PinoLogger implements ILogger {
     private pino: pino.Logger;
     private options: IPinoLoggerOptions;
+    private formatters: Formatter[];
 
     constructor(options: IPinoLoggerOptions) {
         this.options = options;
 
-        const { outputStreams, ...baseOptions } = this.options;
+        const { outputStreams, formatters, ...baseOptions } = this.options;
+
+        this.formatters = formatters || [];
 
         const pinoOptions = {
             timestamp: () => `,"time":"${new Date().toISOString()}"`,
@@ -32,26 +35,36 @@ export class PinoLogger implements ILogger {
     }
 
     public fatal(msg, ...args: any[]): void {
-        this.pino.fatal(msg, ...args);
+        const formatted = this.useFormatters(msg);
+        this.pino.fatal(formatted, ...args);
     }
 
     public error(msg, ...args: any[]): void {
-        this.pino.error(msg, ...args);
+        const formatted = this.useFormatters(msg);
+        this.pino.error(formatted, ...args);
     }
 
     public warn(msg, ...args: any[]): void {
-        this.pino.warn(msg, ...args);
+        const formatted = this.useFormatters(msg);
+        this.pino.warn(formatted, ...args);
     }
 
     public info(msg, ...args: any[]): void {
-        this.pino.info(msg, ...args);
+        const formatted = this.useFormatters(msg);
+        this.pino.info(formatted, ...args);
     }
 
     public debug(msg, ...args: any[]): void {
-        this.pino.debug(msg, ...args);
+        const formatted = this.useFormatters(msg);
+        this.pino.debug(formatted, ...args);
     }
 
     public trace(msg, ...args: any[]): void {
-        this.pino.trace(msg, ...args);
+        const formatted = this.useFormatters(msg);
+        this.pino.trace(formatted, ...args);
+    }
+
+    private useFormatters(msg) {
+        return this.formatters.reduce((previousValue, formatter) => formatter(previousValue), msg);
     }
 }

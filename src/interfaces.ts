@@ -30,6 +30,7 @@ interface ICustomLoggerStream {
 export type IPinoLoggerOptions = {
     level: Pino.LevelWithSilent;
     outputStreams?: ICustomLoggerStream[];
+    formatters?: Formatter[];
     usePinoSerialized?: boolean;
 } & Pino.LoggerOptions;
 
@@ -102,3 +103,5 @@ export interface ISentryBreadcrumb {
     level: number;
     data?: object;
 }
+
+export type Formatter<T = any, U = any> = (msg: T) => U;
