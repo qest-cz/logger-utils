@@ -5,14 +5,14 @@ import { Formatter, ILogger, IPinoLoggerOptions } from '../interfaces';
 export class PinoLogger implements ILogger {
     private pino: pino.Logger;
     private options: IPinoLoggerOptions;
-    private formatters: Formatter[];
+    private logFormatters: Formatter[];
 
     constructor(options: IPinoLoggerOptions) {
         this.options = options;
 
-        const { outputStreams, formatters, ...baseOptions } = this.options;
+        const { outputStreams, logFormatters, ...baseOptions } = this.options;
 
-        this.formatters = formatters || [];
+        this.logFormatters = logFormatters || [];
 
         const pinoOptions = {
             timestamp: () => `,"time":"${new Date().toISOString()}"`,
@@ -65,6 +65,6 @@ export class PinoLogger implements ILogger {
     }
 
     private useFormatters(msg) {
-        return this.formatters.reduce((previousValue, formatter) => formatter(previousValue), msg);
+        return this.logFormatters.reduce((previousValue, formatter) => formatter(previousValue), msg);
     }
 }

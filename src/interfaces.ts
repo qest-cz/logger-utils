@@ -30,7 +30,7 @@ interface ICustomLoggerStream {
 export type IPinoLoggerOptions = {
     level: Pino.LevelWithSilent;
     outputStreams?: ICustomLoggerStream[];
-    formatters?: Formatter[];
+    logFormatters?: Formatter[];
     usePinoSerialized?: boolean;
 } & Pino.LoggerOptions;
 
