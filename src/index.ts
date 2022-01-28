@@ -5,3 +5,4 @@ export * from './pino-logger';
 export * from './sentry-stream';
 export * from './test-logger';
 export * from './interfaces';
+export * from './formatters';
