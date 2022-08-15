@@ -1,4 +1,4 @@
-import * as pino from 'pino';
+import pino from 'pino';
 import { multistream } from 'pino-multi-stream';
 import { Formatter, ILogger, IPinoLoggerOptions } from '../interfaces';
 

@@ -1,7 +1,7 @@
 import { NodeOptions } from '@sentry/node';
 import * as Bunyan from 'bunyan';
 import { WriteStream } from 'fs';
-import * as Pino from 'pino';
+import pino from 'pino';
 
 export interface ILogger {
     fatal: (msg: string | object | Error, ...args: any[]) => void;
@@ -21,18 +21,18 @@ export enum Level {
     TRACE = 'trace',
 }
 
-interface ICustomLoggerStream {
+interface ICustomLoggerStream<StreamType = NodeJS.WriteStream | WriteStream> {
     level: Level;
-    stream: NodeJS.WriteStream | WriteStream;
+    stream: StreamType;
     enabled: boolean;
 }
 
 export type IPinoLoggerOptions = {
-    level: Pino.LevelWithSilent;
-    outputStreams?: ICustomLoggerStream[];
+    level: pino.LevelWithSilent;
+    outputStreams?: ICustomLoggerStream<pino.DestinationStream>[];
     logFormatters?: Formatter[];
     usePinoSerialized?: boolean;
-} & Pino.LoggerOptions;
+} & pino.LoggerOptions;
 
 export type IBunyanLoggerOption = {
     level: Bunyan.LogLevel;

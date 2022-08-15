@@ -2,9 +2,9 @@ pool:
   name: Qest Linux
 steps:
   - task: NodeTool@0
-    displayName: 'Use Node 10.x'
+    displayName: 'Use Node 12.x'
     inputs:
-      versionSpec: 10.x
+      versionSpec: 12.x
 
   - task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@3
     displayName: 'Use Yarn 1.x'
